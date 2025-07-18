@@ -1,5 +1,5 @@
 # Bryan Angulo
-# Menu del cleinte
+# Menu del cliente
 
 def menuCliente():
     seleccion = []
@@ -38,19 +38,29 @@ def menuCliente():
         else:
             print("\nOpción no válida")
 
+
+
 def verMapa():
     # Ver mapa de lugares turísticos conectados.
+    # Grafo: ciudades y conexiones entre ciudades y lugares turisticos
     #Cargar desde archivo "rutas.txt".
     print("\nMapa de lugares turísticos conectados")
 
 def consultarRutaOptima():
-    #Consultar la ruta óptima entre dos ciudades/puntos turísticos y el costo. 
+    #Consultar el costo y la ruta óptima  entre dos ciudades/puntos turísticos y el costo. 
+    # Obtener la ruta más corta 
     # Busque mediante un algoritmo de búsqueda (Lineal, Binaria, Interpolación etc.).
     #Pedir lugar de origen y lugar de destino.
+    #Utilizar el algoritmo de Dijkstra para encontrar la ruta más económica entre dos ciudades/puntos turísticos .
+    #•	BFS (búsqueda de lugares cercanos)
+    # •	DFS (exploración de rutas)
+    #Heap: para mejorar la eficiencia de Dijkstra (cola de prioridad)
+
     print("\nRuta óptima entre dos ciudades")
 
 def explorarLugares():
     #Explorar lugares: organizados jerárquicamente por zonas. (árbol).
+    #•	Árbol: jerarquía de zonas o lugares turísticos
     print("\nExplorar lugares")
 
 def seleccionarCiudades(seleccion):
@@ -60,6 +70,7 @@ def seleccionarCiudades(seleccion):
     print("\nSeleccionar ciudades a visitar")
 
 def listarSeleccion(seleccion): 
+    #Leer datos de ciudades, distancias y costos desde un archivo.
     # Listar la o las ciudades y el costo total(seleccionadas?). 
     # (Ordenar las ciudades /puntos turísticos en base a un algoritmo de ordenamiento 
     # (Burbuja, Inserción, Selección, MergeSort, QuickSort, etc.). 
