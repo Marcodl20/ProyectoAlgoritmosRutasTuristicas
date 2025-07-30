@@ -90,7 +90,7 @@ def agregarRuta(grafoDistancias, grafoPrecios):
 
     print("Ruta Agregada Correctamente")
 
-# Metodo Para Listar las Ciudades sin duplicados y ordenada por distancias
+# Funcion Para Listar las Ciudades sin duplicados y ordenada por distancias
 def listarCiudades(grafoDistancias, grafoPrecios):
     mostrarConexiones = set()
     rutas = []
@@ -118,7 +118,36 @@ def listarCiudades(grafoDistancias, grafoPrecios):
     rutas = ordenarListaCiudades(rutas, "distancia")
     for ruta in rutas:
         print(f"{ruta['origen']} <-----> {ruta['destino']}, Distancia: {ruta['distancia']} km, Precio: {ruta['precio']} $")
+
+# Funcion para consultar una Ruta
+def consultarRuta(grafoDistancias, grafoPrecios):
+    ciudadConsulta = input("Ingrese el nombre de la ciudad que desea consultar: ")
+
+    encontrado = False
+
+    # Algoritmo de Busqueda Lineal
+    for ciudad in grafoDistancias:
+        if ciudad == ciudadConsulta:
+            print(f"Rutas desde {ciudadConsulta}:")
+            conexiones = grafoDistancias.get(ciudadConsulta, [])
+            preciosDestino = dict(grafoPrecios.get(ciudadConsulta, []))
+
+            for destino, distancia in conexiones:
+                precio = preciosDestino.get(destino, "No disponible")
+                print(f"{ciudadConsulta} <-----> {destino}, Distancia: {distancia} Km, Precio: {precio} $")
+            
+            encontrado = True
+            break
     
+    if not encontrado:
+        print("No hay rutas registradas para esa ciudad")
+
+
+
+
+
+
+
 # Menu del Administrador
 def rolAdmin():
     while True:
@@ -140,18 +169,23 @@ def rolAdmin():
                 case 1:
                     print("----- Ha seleccionado Agregar nuevas ciudades/puntos turisticos, distancias y costos ----- ")
                     agregarRuta(grafoDistancias, grafoPrecios)
+
                 case 2:
                     print("----- Ha seleccionado Listar las ciudades/puntos turisticos, distancias y costos ----- ")
                     listarCiudades(grafoDistancias, grafoPrecios)
 
                 case 3:
                     print("----- Ha seleccionado Consultar una ciudad/punto turistico, distancias y costos ----- ")
+                    consultarRuta(grafoDistancias, grafoPrecios)
                 case 4:
                     print("----- Ha seleccionado Actualizar las ciudades/puntos turisticos ----- ")
+                    
                 case 5:
                     print("----- Ha seleccionado Eliminar las ciudades/puntos turisticos ----- ")
+
                 case 6:
                     print("----- Guardar las ciudades/puntos turisticos, distancias y costos en un archivo ----- ")
+
                 case 7:
                     print("--- Saliendo del sistema --- ")
                     break
