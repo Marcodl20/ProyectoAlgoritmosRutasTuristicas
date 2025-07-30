@@ -142,8 +142,26 @@ def consultarRuta(grafoDistancias, grafoPrecios):
     if not encontrado:
         print("No hay rutas registradas para esa ciudad")
 
+# Funcion para Eliminar ciudades/ruta
+def eliminarRuta(grafoDistancias, grafoPrecios):
+    ciudadEliminar = input("Ingrese el nombre de la ciudad que desea eliminar su ruta: ")
 
+    if ciudadEliminar in grafoDistancias:
+        print(f"Se eliminaran todas las rutas de {ciudadEliminar}")
+        del grafoDistancias[ciudadEliminar]
+        del grafoPrecios[ciudadEliminar]
 
+        for ciudad in grafoDistancias:
+            grafoDistancias[ciudad] = [(destino, distancia) for destino, distancia in grafoDistancias[ciudad]
+                                    if destino != ciudadEliminar]
+            
+            grafoPrecios[ciudad] = [(destino, precio) for destino, precio in grafoPrecios[ciudad]
+                                    if destino != ciudadEliminar]
+            
+        print("Ruta(s) eliminada(s) correctamente")
+
+    else:
+        print("No hay rutas registradas para esa ciudad")
 
 
 
@@ -177,11 +195,13 @@ def rolAdmin():
                 case 3:
                     print("----- Ha seleccionado Consultar una ciudad/punto turistico, distancias y costos ----- ")
                     consultarRuta(grafoDistancias, grafoPrecios)
+
                 case 4:
                     print("----- Ha seleccionado Actualizar las ciudades/puntos turisticos ----- ")
                     
                 case 5:
                     print("----- Ha seleccionado Eliminar las ciudades/puntos turisticos ----- ")
+                    eliminarRuta(grafoDistancias, grafoPrecios)
 
                 case 6:
                     print("----- Guardar las ciudades/puntos turisticos, distancias y costos en un archivo ----- ")
