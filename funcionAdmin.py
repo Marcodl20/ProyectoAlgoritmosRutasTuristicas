@@ -1,6 +1,8 @@
 # Lara Marco
 # Rol administrador
-grafo = {
+import heapq
+
+grafoDistancias = {
     'Tulcan': [('Ibarra', 126)],
     'Ibarra': [('Tulcan', 126), ('Quito', 113)],
     'Quito': [('Ibarra', 113), ('SantoDomingo', 152), ('Ambato', 151), ('Tena', 192)],
@@ -15,6 +17,68 @@ grafo = {
     'Loja': [('Cuenca', 212), ('Machala', 237)],
     'Machala': [('Guayaquil', 183), ('Cuenca', 169), ('Loja',237)]
 }
+
+grafoPrecios = {
+    'Tulcan': [('Ibarra', 25)],
+    'Ibarra': [('Tulcan', 25), ('Quito', 20)],
+    'Quito': [('Ibarra', 20), ('SantoDomingo', 15), ('Ambato', 35), ('Tena', 27)],
+    'SantoDomingo': [('Quito', 15), ('Esmeraldas', 10), ('Manta', 19), ('Guayaquil', 18)],
+    'Esmeraldas': [('SantoDomingo', 10)],
+    'Manta': [('SantoDomingo', 19), ('Guayaquil', 27)],
+    'Guayaquil': [('SantoDomingo', 18), ('Ambato', 14), ('Cuenca', 26), ('Machala', 40), ('Manta', 27)],
+    'Ambato': [('Quito', 35), ('Macas', 21), ('Guayaquil', 14), ('Cuenca', 13)],
+    'Tena': [('Quito', 27), ('Macas', 12)],
+    'Macas': [('Tena', 12), ('Ambato', 21)],
+    'Cuenca': [('Ambato', 13), ('Loja', 16), ('Machala', 11), ('Guayaquil', 26)],
+    'Loja': [('Cuenca', 16), ('Machala', 41)],
+    'Machala': [('Guayaquil', 40), ('Cuenca', 11), ('Loja',41)]
+}
+
+# Metodo de Ordenamiento (Burbuja)
+def ordenarListaCiudades(rutas, criterio):
+    tamanio = len(rutas)
+
+    for i in range(tamanio -1):
+        for j in range(tamanio -1 - i):
+            if rutas[j][criterio] > rutas[j + 1][criterio]:
+                rutas[j], rutas[j + 1] = rutas[j + 1], rutas[j]
+    return rutas
+
+
+# Metodo Para Listar las Ciudades sin duplicados y ordenada por distancias
+def listarCiudades(grafoDistancias, grafoPrecios):
+    mostrarConexiones = set()
+    rutas = []
+
+    for ciudadOrigen in grafoDistancias:
+        conexionesDistancia = grafoDistancias[ciudadOrigen]
+        conexionesPrecio = grafoPrecios.get(ciudadOrigen, [])
+
+        preciosDestino = {ciudadDestino: precio for ciudadDestino, precio in conexionesPrecio}
+
+        for ciudadDestino, distancia in conexionesDistancia:
+            conexion = tuple(sorted([ciudadOrigen, ciudadDestino]))
+
+            if conexion not in mostrarConexiones:
+                mostrarConexiones.add(conexion)
+                precio = preciosDestino.get(ciudadDestino, "No disponible")
+
+                rutas.append({
+                    "origen": ciudadOrigen,
+                    "destino": ciudadDestino,
+                    "distancia": distancia,
+                    "precio": precio
+                })
+
+    rutas = ordenarListaCiudades(rutas, "distancia")
+    for ruta in rutas:
+        print(f"{ruta['origen']} <-----> {ruta['destino']}, Distancia: {ruta['distancia']} km, Precio: {ruta['precio']} $")
+    
+
+
+
+
+
 
 
 def rolAdmin():
@@ -38,6 +102,8 @@ def rolAdmin():
                     print("----- Ha seleccionado Agregar nuevas ciudades/puntos turisticos, distancias y costos ----- ")
                 case 2:
                     print("----- Ha seleccionado Listar las ciudades/puntos turisticos, distancias y costos ----- ")
+                    listarCiudades(grafoDistancias, grafoPrecios)
+
                 case 3:
                     print("----- Ha seleccionado Consultar una ciudad/punto turistico, distancias y costos ----- ")
                 case 4:
