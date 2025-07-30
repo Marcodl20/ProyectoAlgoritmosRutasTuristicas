@@ -142,6 +142,54 @@ def consultarRuta(grafoDistancias, grafoPrecios):
     if not encontrado:
         print("No hay rutas registradas para esa ciudad")
 
+# Funcion para actualizar rutas
+def actualizarRuta(grafoDistancias, grafoPrecios):
+    origenActualizar = input("Ingrese la ciudad de origen que quiera actualizar: ").strip().title()
+    destinoActualizar = input("Ingrese la ciudad de destino que quiera actualizar: ").strip().title()
+
+    if origenActualizar in grafoDistancias and destinoActualizar in grafoDistancias:
+        actualizo = False
+
+        print("Que desea modificar?")
+        print(" 1. Distancia \n 2. Precio")
+        try:
+            opcion = int(input("Elija una opción: "))
+            match opcion:
+                case 1:
+                    nuevaDistancia = float(input("Ingrese la nueva distancia (Km): "))
+                    grafoDistancias[origenActualizar] = [
+                        (ciudad, nuevaDistancia if ciudad == destinoActualizar else distancia)
+                        for ciudad, distancia in grafoDistancias[origenActualizar]
+                    ]
+
+                    grafoDistancias[destinoActualizar] = [
+                        (ciudad, nuevaDistancia if ciudad == origenActualizar else distancia)
+                        for ciudad, distancia in grafoDistancias[destinoActualizar]
+                    ]
+
+                    actualizo = True
+                case 2:
+                    nuevoPrecio = float(input("Ingrese el nuevo precio ($): "))
+                    grafoPrecios[origenActualizar] = [
+                        (ciudad, nuevoPrecio if ciudad == destinoActualizar else precio)
+                        for ciudad, precio in grafoPrecios[origenActualizar]
+                    ]
+
+                    grafoPrecios[destinoActualizar] = [
+                        (ciudad, nuevoPrecio if ciudad == origenActualizar else precio)
+                        for ciudad, precio in grafoPrecios[destinoActualizar]
+                    ]
+                    actualizo = True
+                case _:
+                    print("Valor fuera de rango, intente nuevamente")
+        except ValueError:
+            print("Valores invalidos, intente nuevamente")
+        
+        if actualizo:
+            print("ruta actualizada Correctamente")
+    else:
+        print("Ciudad de origen(inicio) no encontrada")
+
 # Funcion para Eliminar ciudades/ruta
 def eliminarRuta(grafoDistancias, grafoPrecios):
     ciudadEliminar = input("Ingrese el nombre de la ciudad que desea eliminar su ruta: ")
@@ -227,7 +275,8 @@ def rolAdmin():
 
                 case 4:
                     print("----- Ha seleccionado Actualizar las ciudades/puntos turisticos ----- ")
-                    
+                    actualizarRuta(grafoDistancias, grafoPrecios)
+
                 case 5:
                     print("----- Ha seleccionado Eliminar las ciudades/puntos turisticos ----- ")
                     eliminarRuta(grafoDistancias, grafoPrecios)
