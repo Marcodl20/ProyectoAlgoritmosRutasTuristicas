@@ -163,8 +163,37 @@ def eliminarRuta(grafoDistancias, grafoPrecios):
     else:
         print("No hay rutas registradas para esa ciudad")
 
+# Funcion para Guardar Rutas
+def guardarRutas(grafoDistancias, grafoPrecios):
+    rutas = []
+    rutasGuardadas = set()
+
+    for origen in grafoDistancias:
+        conexionesDistancia = grafoDistancias[origen]
+        conexionesPrecio = dict(grafoPrecios.get(origen, []))
+
+        for destino, distancia in conexionesDistancia:
+            rutaOrdenada = tuple(sorted([origen, destino]))
+
+            if rutaOrdenada not in rutasGuardadas:
+                rutasGuardadas.add(rutaOrdenada)
+                precio = conexionesPrecio.get(destino, "No disponible")
+
+                rutas.append({
+                    "origen": origen,
+                    "destino": destino,
+                    "distancia": distancia,
+                    "precio": precio
+                })
+
+    rutas = ordenarListaCiudades(rutas, "distancia")
+
+    with open("rutas.txt", "w") as archivo:
+        for ruta in rutas:
+            archivo.write(f"Ciudad de inicio: {ruta['origen']} <-----> Destino: {ruta['destino']}, Distancia: {ruta['distancia']} km, Precio: {ruta['precio']} $ \n")
 
 
+    print("Cambios Guardados correctamente en el archivo 'rutas.txt'")
 
 # Menu del Administrador
 def rolAdmin():
@@ -204,7 +233,8 @@ def rolAdmin():
                     eliminarRuta(grafoDistancias, grafoPrecios)
 
                 case 6:
-                    print("----- Guardar las ciudades/puntos turisticos, distancias y costos en un archivo ----- ")
+                    print("----- Ha seleccionado Guardar las ciudades/puntos turisticos, distancias y costos en un archivo ----- ")
+                    guardarRutas(grafoDistancias, grafoPrecios)
 
                 case 7:
                     print("--- Saliendo del sistema --- ")
