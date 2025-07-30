@@ -1,6 +1,7 @@
 # Lara Marco
 # Rol administrador
 import heapq
+import os
 
 grafoDistancias = {
     'Tulcan': [('Ibarra', 126)],
@@ -44,6 +45,50 @@ def ordenarListaCiudades(rutas, criterio):
                 rutas[j], rutas[j + 1] = rutas[j + 1], rutas[j]
     return rutas
 
+# Carga la lista de rutas desde el archivo rutas.txt
+def cargarRutas():
+    rutas = []
+    if not os.path.exists("rutas.txt"):
+        return rutas
+    
+    with open("rutas.txt", "r") as archivo:
+        for linea in archivo:
+            try:
+                partes = linea.strip().split(", ")
+                origen = partes[0].split(": ")[1]
+                destino = partes[1].split(": ")[1]
+                distancia = float(partes[2].split(": ")[1])
+                precio = float(partes[3].split(": ")[1])
+
+                rutas.append({
+                    "origen": origen,
+                    "destino": destino,
+                    "distancia": distancia,
+                    "precio": precio
+                })
+            except Exception:
+                print(f"Formato invalido en la linea: {linea.strip()}")
+    return rutas
+
+# Funcion para Agregar una Ruta
+def agregarRuta(grafoDistancias, grafoPrecios):
+    try:
+        origen = input("Ingrese el nombre de la ciudad de Inicio (origen): ")
+        destino = input("Ingrese el nombre de la ciudad de Destino: ")
+        distancia = float(input("Ingrese la distancia que hay entre las dos ciudades: "))
+        precio = float(input("Ingrese el precio de la ruta: "))
+
+    except ValueError:
+        print("Datos invalidos, intente nuevamente")
+        return
+        
+    grafoDistancias.setdefault(origen, []).append((destino, distancia))
+    grafoDistancias.setdefault(destino, []).append((origen, distancia))
+
+    grafoPrecios.setdefault(origen, []).append((destino, precio))
+    grafoPrecios.setdefault(destino, []).append((origen, precio))
+
+    print("Ruta Agregada Correctamente")
 
 # Metodo Para Listar las Ciudades sin duplicados y ordenada por distancias
 def listarCiudades(grafoDistancias, grafoPrecios):
@@ -74,13 +119,7 @@ def listarCiudades(grafoDistancias, grafoPrecios):
     for ruta in rutas:
         print(f"{ruta['origen']} <-----> {ruta['destino']}, Distancia: {ruta['distancia']} km, Precio: {ruta['precio']} $")
     
-
-
-
-
-
-
-
+# Menu del Administrador
 def rolAdmin():
     while True:
         try:
@@ -100,6 +139,7 @@ def rolAdmin():
             match opcionAdmin:
                 case 1:
                     print("----- Ha seleccionado Agregar nuevas ciudades/puntos turisticos, distancias y costos ----- ")
+                    agregarRuta(grafoDistancias, grafoPrecios)
                 case 2:
                     print("----- Ha seleccionado Listar las ciudades/puntos turisticos, distancias y costos ----- ")
                     listarCiudades(grafoDistancias, grafoPrecios)
