@@ -1,4 +1,5 @@
-grafo = {
+#Bryan Angulo
+grafoDistancias = {
     'Tulcan': [('Ibarra', 126)],
     'Ibarra': [('Tulcan', 126), ('Quito', 113)],
     'Quito': [('Ibarra', 113), ('SantoDomingo', 152), ('Ambato', 151), ('Tena', 192)],
@@ -11,7 +12,23 @@ grafo = {
     'Macas': [('Tena', 204), ('Ambato', 214)],
     'Cuenca': [('Ambato', 308), ('Loja', 212), ('Machala', 169), ('Guayaquil', 196)],
     'Loja': [('Cuenca', 212), ('Machala', 237)],
-    'Machala': [('Guayaquil', 183), ('Cuenca', 169), ('Loja', 237)]
+    'Machala': [('Guayaquil', 183), ('Cuenca', 169), ('Loja',237)]
+}
+
+grafoPrecios = {
+    'Tulcan': [('Ibarra', 25)],
+    'Ibarra': [('Tulcan', 25), ('Quito', 20)],
+    'Quito': [('Ibarra', 20), ('SantoDomingo', 15), ('Ambato', 35), ('Tena', 27)],
+    'SantoDomingo': [('Quito', 15), ('Esmeraldas', 10), ('Manta', 19), ('Guayaquil', 18)],
+    'Esmeraldas': [('SantoDomingo', 10)],
+    'Manta': [('SantoDomingo', 19), ('Guayaquil', 27)],
+    'Guayaquil': [('SantoDomingo', 18), ('Ambato', 14), ('Cuenca', 26), ('Machala', 40), ('Manta', 27)],
+    'Ambato': [('Quito', 35), ('Macas', 21), ('Guayaquil', 14), ('Cuenca', 13)],
+    'Tena': [('Quito', 27), ('Macas', 12)],
+    'Macas': [('Tena', 12), ('Ambato', 21)],
+    'Cuenca': [('Ambato', 13), ('Loja', 16), ('Machala', 11), ('Guayaquil', 26)],
+    'Loja': [('Cuenca', 16), ('Machala', 41)],
+    'Machala': [('Guayaquil', 40), ('Cuenca', 11), ('Loja',41)]
 }
 
 # Distancias entre ciudades (en km):
