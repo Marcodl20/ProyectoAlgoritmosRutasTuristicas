@@ -1,0 +1,1 @@
+Origen: Esmeraldas, Destino: Loja, Ruta: Esmeraldas->SantoDomingo->Quito->Tena->Macas->Ambato->Cuenca->Machala->Loja, Distancia: 1656.0 km, Precio: $150.00
