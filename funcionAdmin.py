@@ -238,7 +238,7 @@ def guardarRutas(grafoDistancias, grafoPrecios):
 
     with open("rutas.txt", "w") as archivo:
         for ruta in rutas:
-            archivo.write(f"Ciudad de inicio: {ruta['origen']} <-----> Destino: {ruta['destino']}, Distancia: {ruta['distancia']} km, Precio: {ruta['precio']} $ \n")
+            archivo.write(f"Origen: {ruta['origen']}, Destino: {ruta['destino']}, Distancia: {ruta['distancia']}, Precio: {ruta['precio']} \n")
 
 
     print("Cambios Guardados correctamente en el archivo 'rutas.txt'")
